@@ -1,0 +1,4 @@
+cron:
+- description: Check to see if we send a text
+  url: /text/motivate
+  schedule: every 1 minutes
