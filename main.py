@@ -34,6 +34,7 @@ def motivate():
         )
     else:
         logging.info("No text this time!")
+    return 'OK'
 
 
 @app.route('/')
