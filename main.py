@@ -7,9 +7,10 @@ from twilio.rest import TwilioRestClient
 app = Flask(__name__)
 
 # 4 times a week (on average) if run every minute
-MINUTES_IN_WEEK = float(60 * 24 * 7)
-TEXTS_PER_WEEK = float(4) / float(60 * 24 * 7)
-text_probability = TEXTS_PER_WEEK
+HOURS_A_DAY_CRON_RUNS = 14
+MINUTES_IN_WEEK = float(60 * HOURS_A_DAY_CRON_RUNS * 7)
+TEXTS_PER_WEEK = 4
+text_probability = float(TEXTS_PER_WEEK) / MINUTES_IN_WEEK
 
 messages = [
     "You can do this",
@@ -25,7 +26,7 @@ messages = [
 @app.route('/text/motivate')
 def motivate():
     client = TwilioRestClient(twilio_sid, twilio_auth)
-    if random.random() < TEXTS_PER_WEEK:
+    if random.random() < text_probability:
         logging.info("Sending Text")
         client.messages.create(
             to=receiver_number,
